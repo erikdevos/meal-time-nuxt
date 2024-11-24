@@ -2,7 +2,7 @@
     <!-- Loader element -->
     <div id="loader" class="loader-wrapper">
         <div class="loader-image">
-            <img src="/public/loader.svg">
+            <img src="/loader.svg">
         </div>
     </div>
 </template>
