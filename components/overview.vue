@@ -9,27 +9,39 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue';
-import mealsData from 'public/data/meals.json';
+import { ref, watch, onMounted } from 'vue';
 import SearchBar from '~/components/search-bar.vue';
 import FilterBar from '~/components/filter-bar.vue';
 import MealOverview from '~/components/meal-overview.vue';
 
-const meals = ref([...mealsData]); // Original meals data
-const filteredMeals = ref([...mealsData]); // Meals after search/filter
+// Meal data (to be fetched from external URL)
+const meals = ref([]);
+const filteredMeals = ref([]);
+
+// Fetch meals data from the external URL
+const fetchMealsData = async () => {
+  try {
+    const response = await fetch('https://jsonhost.com/json/0dcaa1a6c5578a40b36bb10ef412f19e');
+    const data = await response.json();
+    meals.value = data || [];
+    filteredMeals.value = [...meals.value];
+  } catch (err) {
+    console.error('Error fetching meals:', err);
+  }
+};
 
 // Update filtered meals based on search/filter
 const updateMeals = (newMeals) => {
   filteredMeals.value = newMeals;
 };
 
-// Update filtered meals with the new data
-const handleUpdatedMeals = (updatedMeals) => {
-  filteredMeals.value = updatedMeals;
-};
-
 // Watch for changes and log the filtered meals to debug
 watch(filteredMeals, (newMeals) => {
   console.log(newMeals); // You can replace this with more debug logic
+});
+
+// Fetch data on component mount
+onMounted(() => {
+  fetchMealsData();
 });
 </script>
