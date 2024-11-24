@@ -2,7 +2,7 @@
     <div class="meal-item__wrapper">
       <div class="meal-image-wrapper">
         <img
-        :src="'/meal-images/medium/' + meal.naam.replace(/\s+/g, '_').replace(/[^a-z0-9_]/gi, '').toLowerCase() + '.webp'"          :alt="'Gerecht ' + meal.naam"
+        :src="'meal-images/medium/' + meal.naam.replace(/\s+/g, '_').replace(/[^a-z0-9_]/gi, '').toLowerCase() + '.webp'"          :alt="'Gerecht ' + meal.naam"
         />
         <ul class="category-labels">
           <li v-for="label in meal.categoryLabels" :key="label" v-html="label"></li>
