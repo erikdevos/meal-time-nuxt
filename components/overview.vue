@@ -10,7 +10,7 @@
 
 <script setup>
 import { ref, watch } from 'vue';
-import mealsData from '~/public/data/meals.json';
+import mealsData from 'public/data/meals.json';
 import SearchBar from '~/components/search-bar.vue';
 import FilterBar from '~/components/filter-bar.vue';
 import MealOverview from '~/components/meal-overview.vue';
