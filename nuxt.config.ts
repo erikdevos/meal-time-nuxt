@@ -4,4 +4,5 @@ export default defineNuxtConfig({
   debug: true,
   app: {
     baseURL: '/meal-time-nuxt/'
+  }
 });
