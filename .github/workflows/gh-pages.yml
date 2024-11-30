@@ -17,6 +17,14 @@ jobs:
         with:
           node-version: '18'
 
+      - name: Cache node_modules
+        uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
       - name: Install dependencies
         run: npm install
 
@@ -26,8 +34,11 @@ jobs:
       - name: Generate static files
         run: npm run generate
 
+      - name: Disable Jekyll
+        run: touch dist/.nojekyll  # Or .output/public/.nojekyll if that's the publish_dir
+
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: .output/public  # Ensure this is the correct output folder
+          publish_dir: dist  # Or .output/public if your build setup requires it

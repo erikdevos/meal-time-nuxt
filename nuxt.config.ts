@@ -1,10 +1,7 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
   debug: true,
-  target: 'static',
-  router: {
-    base: '/meal-time-nuxt/'
-  }
-})
+  app: {
+    baseURL: '/meal-time-nuxt/'
+});
