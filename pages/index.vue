@@ -5,7 +5,7 @@
 <script setup>
 import { onMounted } from 'vue';
 import { useState } from '#app';
-import overview from './overview.vue';
+import overview from '~/pages/overview.vue';
 
 // Define global state for meals
 const meals = useState('meals', () => []);
