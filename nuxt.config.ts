@@ -1,6 +1,4 @@
-import fs from 'fs'
-import path from 'path'
-
+// Ensure this is inside your nuxt.config.js or relevant configuration
 export default {
   generate: {
     routes: async () => {
@@ -21,7 +19,5 @@ export default {
         return []; // Return an empty array if there's an error
       }
     }
-  },
-
-  compatibilityDate: '2024-12-01'
+  }
 };
