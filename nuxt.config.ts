@@ -9,5 +9,12 @@ export default defineNuxtConfig({
         { hid: 'robots', name: 'robots', content: 'noindex, nofollow' }
       ]
     }
+  },
+  generate: {
+    routes: async () => {
+      const mealData = await fetch('/data/meals.json').then(res => res.json());
+      const routes = mealData.map(item => `/meal/${encodeURIComponent(item.name)}`);
+      return routes;
+    }
   }
 });
