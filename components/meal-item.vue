@@ -1,6 +1,6 @@
 <template>
     <div class="meal-item__wrapper">
-      <NuxtLink :to="`/meals/${meal.name.replace(/\s+/g, '-').replace(/[^a-z0-9-_]/gi, '').toLowerCase()}`">
+        <NuxtLink :to="`/meals/${meal.name.replace(/\s+/g, '-').replace(/[^a-z0-9-_]/gi, '').toLowerCase()}`">
         <div class="meal-image-wrapper">
           <img
             :src="'meal-images/medium/' + meal.name.replace(/\s+/g, '_').replace(/[^a-z0-9_]/gi, '').toLowerCase() + '.webp'"

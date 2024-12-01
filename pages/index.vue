@@ -1,6 +1,26 @@
 <template>
-    <overview />
+  <overview />
 </template>
+
+<script setup>
+import { onMounted } from 'vue';
+import { useState } from '#app';
+import overview from './overview.vue';
+
+// Define global state for meals
+const meals = useState('meals', () => []);
+
+// Fetch meal data on client-side mount
+onMounted(async () => {
+  try {
+    const response = await fetch('/data/meals.json');  // Reference the local JSON file in the public folder
+    const data = await response.json();
+    meals.value = data || [];
+  } catch (err) {
+    console.error('Error getting meals:', err);
+  }
+});
+</script>
 
 <style>
 :root {
