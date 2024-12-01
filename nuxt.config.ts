@@ -21,6 +21,7 @@ export default {
         return []; // Return an empty array if there's an error
       }
     }
-  }
-};
+  },
 
+  compatibilityDate: '2024-12-01'
+};
