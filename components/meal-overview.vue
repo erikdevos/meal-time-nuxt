@@ -36,7 +36,7 @@ const updateMealsWithLoader = (filteredMeals) => {
   setTimeout(() => {
     meals.value = filteredMeals; // Update meals after delay
     loading.value = false; // Hide loader
-  }, 200); // Adjust delay if needed
+  }, 200);
 };
 
 // Watch for changes in meals from search-bar and update meals with loader

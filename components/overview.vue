@@ -23,12 +23,12 @@ const filteredMeals = ref([]); // Filtered meal data
 // Fetch meals data from external source
 const fetchMealsData = async () => {
   try {
-    const response = await fetch('https://jsonhost.com/json/0dcaa1a6c5578a40b36bb10ef412f19e');
+    const response = await fetch('https://jsonhost.com/json/5f19df4daab1bba7c467369dd44f8d8d');
     const data = await response.json();
     meals.value = data || [];
-    filteredMeals.value = [...meals.value]; // Initialize filteredMeals with all meals
+    filteredMeals.value = [...meals.value]; // Start with all meals
   } catch (err) {
-    console.error('Error fetching meals:', err);
+    console.error('Error getting meals:', err);
   }
 };
 

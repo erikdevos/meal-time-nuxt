@@ -1,26 +1,30 @@
 <template>
     <div class="meal-item__wrapper">
-      <div class="meal-image-wrapper">
-        <img
-        :src="'meal-images/medium/' + meal.naam.replace(/\s+/g, '_').replace(/[^a-z0-9_]/gi, '').toLowerCase() + '.webp'"          :alt="'Gerecht ' + meal.naam"
-         loading="lazy"/>
-        <ul class="category-labels">
-          <li v-for="label in meal.categoryLabels" :key="label" v-html="label"></li>
-        </ul>
-      </div>
-      <div class="meal-info-wrapper">
-        <h2>{{ meal.naam }}</h2>
-        <div class="short-description">{{ meal.omschrijving }}</div>
-      </div>
+      <NuxtLink :to="`/meals/${meal.name.replace(/\s+/g, '-').replace(/[^a-z0-9-_]/gi, '').toLowerCase()}`">
+        <div class="meal-image-wrapper">
+          <img
+            :src="'meal-images/medium/' + meal.name.replace(/\s+/g, '_').replace(/[^a-z0-9_]/gi, '').toLowerCase() + '.webp'"
+            :alt="'Gerecht ' + meal.name"
+            loading="lazy"
+          />
+          <ul class="category-labels">
+            <li v-for="label in meal.categoryLabels" :key="label" v-html="label"></li>
+          </ul>
+        </div>
+        <div class="meal-info-wrapper">
+          <h2>{{ meal.name }}</h2>
+          <div class="short-description">{{ meal.description }}</div>
+        </div>
+      </NuxtLink>
     </div>
-</template>
-
-<script setup>
-defineProps({
-  meal: Object, // The meal data passed from parent
-});
-</script>
-
+  </template>
+  
+  <script setup>
+  defineProps({
+    meal: Object, // The meal data passed from parent
+  });
+  </script>
+  
 <style scoped>
     .meal-item__wrapper {
         width: 100%;
@@ -31,7 +35,10 @@ defineProps({
         flex-direction: column;
         transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
         overflow: hidden;
-
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
         &:hover {
             transform: scale(1.05);
             cursor: pointer;

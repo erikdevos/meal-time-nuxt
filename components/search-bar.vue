@@ -49,8 +49,8 @@ const handleSearch = () => {
     const filteredMeals = props.meals.filter(meal => {
       const searchText = searchQuery.value.toLowerCase();
       return (
-        meal?.naam?.toLowerCase().includes(searchText) || 
-        meal?.omschrijving?.toLowerCase().includes(searchText)
+        meal?.name?.toLowerCase().includes(searchText) || 
+        meal?.description?.toLowerCase().includes(searchText)
       );
     });
 
