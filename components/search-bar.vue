@@ -69,7 +69,7 @@ const clearSearch = () => {
   .search-form-wrapper {
     margin-bottom: 2rem;
     @media only screen and (max-width: 600px) {
-      margin-bottom: 1.5rem;
+      margin-bottom: 1rem;
     }
     .search-input-wrapper {
       display: flex;

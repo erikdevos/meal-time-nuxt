@@ -50,6 +50,8 @@ button {
   border-radius: 0.7rem;
   font-size: 1rem;
   transition: all ease-in-out 0.5s;
+  display: inline-flex;
+  gap: 0.5rem;
 
   @media only screen and (max-width: 600px) {
     padding-top: 0.5rem;
@@ -84,6 +86,15 @@ button {
   &:not(.no-animate):hover {
     padding-left: 1.2rem;
     padding-right: 1.2rem;
+  }
+
+  .icon {
+    width: 1rem;
+    display: inline-flex;
+    align-items: center;
+    img {
+      width: 100%;
+    }
   }
 }
 
