@@ -1,41 +1,47 @@
 <template>
-    <!-- Search form -->
-    <div class="search-form-wrapper">
-      <form @submit.prevent="handleSearch">
-        <input
-          type="text"
-          id="search-input"
-          class="search-input"
-          v-model="searchQuery"
-          placeholder="Zoek een gerecht"
-          autofocus
-        />
-      </form>
-    </div>
-  </template>
-  
-  <script setup>
-  import { ref, defineProps, defineEmits } from 'vue';
-  
-  // Define the prop to receive meals
-  const props = defineProps({
-    meals: {
-      type: Array,
-      required: true
-    }
-  });
-  
-  const searchQuery = ref('');
-  const emit = defineEmits();
-  
-  // Live search
-  const handleSearch = () => {
-    const filteredMeals = props.meals.filter(meal => 
-      meal.attributes.naam.toLowerCase().includes(searchQuery.value.toLowerCase())
+  <!-- Search form -->
+  <div class="search-form-wrapper">
+    <form @submit.prevent="handleSearch">
+      <input
+        type="text"
+        id="search-input"
+        class="search-input"
+        v-model="searchQuery"
+        placeholder="Zoek een gerecht"
+        autofocus
+      />
+    </form>
+  </div>
+</template>
+
+<script setup>
+import { ref, defineProps, defineEmits } from 'vue';
+
+// Define the prop to receive meals
+const props = defineProps({
+  meals: {
+    type: Array,
+    required: true
+  }
+});
+
+const searchQuery = ref('');
+const emit = defineEmits(['updateMeals']);
+
+// Live search
+const handleSearch = () => {
+  const filteredMeals = props.meals.filter(meal => {
+    const searchText = searchQuery.value.toLowerCase();
+    return (
+      meal?.naam?.toLowerCase().includes(searchText) || 
+      meal?.omschrijving?.toLowerCase().includes(searchText)
     );
-    emit('updateMeals', filteredMeals);
-  };
-  </script>  
+  });
+
+  emit('updateMeals', [...filteredMeals]); // Ensure reactivity with spread operator
+};
+
+</script>
   
   <style scoped>
   .search-form-wrapper {
