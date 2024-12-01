@@ -7,7 +7,7 @@
             Ververs overzicht
         </button>
         
-        <div class="filter-toggles">
+        <div class="filter-toggles" style="display: none;">
             <span class="label">Laat zien:</span>
             <button 
                 class="secondary" 

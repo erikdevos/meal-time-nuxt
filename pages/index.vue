@@ -50,6 +50,7 @@ button {
   border-radius: 0.7rem;
   font-size: 1rem;
   transition: all ease-in-out 0.5s;
+
   @media only screen and (max-width: 600px) {
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
@@ -57,40 +58,48 @@ button {
     padding-right: 0.8rem;
     font-size: 0.9rem;
   }
-}
-button.primary {
-  color: var(--color-white);
-  background-color: var(--color-primary);
-}
-button.primary:hover {
-  background-color: var(--color-primary-hover);
-}
-button.secondary {
-  color: var(--color-white);
-  background-color: var(--color-secondary);
-}
-button.secondary:hover {
-  background-color: var(--color-secondary-hover);
-}
-button.secondary.active {
-  background-color: var(--color-secondary-hover);
-}
-button:hover {
-  padding-left: 1.2rem;
-  padding-right: 1.2rem;
+
+  &.primary {
+    color: var(--color-white);
+    background-color: var(--color-primary);
+
+    &:hover {
+      background-color: var(--color-primary-hover);
+    }
+  }
+
+  &.secondary {
+    color: var(--color-white);
+    background-color: var(--color-secondary);
+
+    &:hover {
+      background-color: var(--color-secondary-hover);
+    }
+
+    &.active {
+      background-color: var(--color-secondary-hover);
+    }
+  }
+
+  &:not(.no-animate):hover {
+    padding-left: 1.2rem;
+    padding-right: 1.2rem;
+  }
 }
 
 .selected-meals {
   margin-bottom: 2rem;
   font-size: 1.2rem;
-}
-.selected-meals .label {
-  margin-right: 0.5rem;
-  font-weight: bold;
-}
-.selected-meals .selected-meal {
-  font-weight: bold;
-  color: var(--color-primary-hover);
+
+  .label {
+    margin-right: 0.5rem;
+    font-weight: bold;
+  }
+
+  .selected-meal {
+    font-weight: bold;
+    color: var(--color-primary-hover);
+  }
 }
 
 ul li {
@@ -117,9 +126,7 @@ pre {
   max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
-}
-@media only screen and (max-width: 1200px) {
-  .container {
+  @media only screen and (max-width: 1200px) {
     padding-left: 1rem;
     padding-right: 1rem;
   }
