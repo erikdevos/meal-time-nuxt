@@ -12,9 +12,19 @@ export default defineNuxtConfig({
   },
   generate: {
     routes: async () => {
-      const mealData = await fetch('/data/meals.json').then(res => res.json());
-      const routes = mealData.map(item => `/meal/${encodeURIComponent(item.name)}`);
-      return routes;
+      try {
+        // Fetch meal data from the local meals.json file
+        const mealData = await fetch('/data/meals.json').then(res => res.json());
+
+        // Generate dynamic routes for each meal
+        const routes = mealData.map(item => `/meal/${encodeURIComponent(item.name)}`);
+        
+        // Return the generated routes
+        return routes;
+      } catch (error) {
+        console.error('Error generating routes:', error);
+        return []; // Return an empty array if there's an error
+      }
     }
   }
 });
