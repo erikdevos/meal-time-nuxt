@@ -42,22 +42,24 @@
     grid-column-gap: 3rem;
     grid-row-gap: 3rem;
     margin-bottom: 5rem;
-  }
-  
-  @media only screen and (max-width: 900px) {
-    .meals-container {
+
+    @media only screen and (max-width: 900px) {
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      grid-column-gap: 2rem;
-      grid-row-gap: 2rem;
+      grid-column-gap: 1.5rem;
+      grid-row-gap: 1.5rem;
     }
-  }
+
+    @media only screen and (max-width: 600px) {
+      gap: 1rem;
+    }
   
-  @media only screen and (max-width: 500px) {
-    .meals-container {
+    @media only screen and (max-width: 300px) {
       grid-template-columns: repeat(1, minmax(0, 1fr));
       grid-column-gap: 0;
       grid-row-gap: 3rem;
     }
+
   }
+
   </style>
   

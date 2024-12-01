@@ -97,42 +97,62 @@ const sortByNewest = () => {
 
 
 <style scoped>
-    .button-bar {
-    display: flex;
-    align-items: center;
-    margin-bottom: 3rem;
-    }
+.button-bar {
+  display: flex;
+  align-items: center;
+  margin-bottom: 3rem;
+
+  @media only screen and (max-width: 600px) {
+    flex-direction: column;
+  }
+
+  .overview-refresh-button {
+    margin-right: 1rem;
+
     @media only screen and (max-width: 600px) {
-    .button-bar {
-        flex-direction: column;
+      margin-right: 0;
+      margin-bottom: 1rem;
     }
-    }
-    .button-bar .overview-refresh-button {
-    margin-right: 1rem;
-    }
-    .button-bar .filter-toggles {
+  }
+
+  .filter-toggles {
     display: flex;
     align-items: center;
+    @media only screen and (max-width: 600px) {
+      flex-wrap: wrap;
+      row-gap: 0.5rem;
+      margin-bottom: 1rem;
     }
-    .button-bar .filter-toggles .label {
-    margin-right: 1rem;
-    font-weight: bold;
+    .label {
+      margin-right: 1rem;
+      font-weight: bold;
     }
-    .button-bar .filter-toggles button {
-    margin-right: 0.5rem;
-    background-color: gray;
+
+    button {
+      margin-right: 0.5rem;
+      background-color: gray;
+
+      &.active {
+        background-color: var(--color-primary-hover);
+      }
+
+      &:hover {
+        background-color: var(--color-primary);
+      }
+
+      &:last-of-type {
+        margin-right: 0;
+      }
     }
-    .button-bar .filter-toggles button.active {
-    background-color: var(--color-primary-hover);
-    }
-    .button-bar .filter-toggles button:hover {
-    background-color: var(--color-primary);
-    }
-    .button-bar .filter-toggles button:last-of-type {
-    margin-right: 0;
-    }
-    .button-bar .overview-totals {
+  }
+
+  .overview-totals {
     margin-left: auto;
     color: var(--color-mid-gray);
+    @media only screen and (max-width: 600px) {
+      margin-left: initial;
+      text-align: center;
     }
+  }
+}
 </style>

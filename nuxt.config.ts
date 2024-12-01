@@ -3,6 +3,11 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   debug: true,
   app: {
-    baseURL: '/meal-time-nuxt/'
+    baseURL: '/meal-time-nuxt/',
+    head: {
+      meta: [
+        { hid: 'robots', name: 'robots', content: 'noindex, nofollow' }
+      ]
+    }
   }
 });

@@ -3,7 +3,7 @@
       <div class="meal-image-wrapper">
         <img
         :src="'meal-images/medium/' + meal.naam.replace(/\s+/g, '_').replace(/[^a-z0-9_]/gi, '').toLowerCase() + '.webp'"          :alt="'Gerecht ' + meal.naam"
-        />
+         loading="lazy"/>
         <ul class="category-labels">
           <li v-for="label in meal.categoryLabels" :key="label" v-html="label"></li>
         </ul>
@@ -31,19 +31,20 @@ defineProps({
         flex-direction: column;
         transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
         overflow: hidden;
+
+        &:hover {
+            transform: scale(1.05);
+            cursor: pointer;
+            box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
+        }
+
+        &.active {
+            transform: scale(1.05);
+            box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
+            outline: solid 5px var(--color-primary);
+        }
     }
 
-    .meal-item__wrapper:hover {
-        transform: scale(1.05);
-        cursor: pointer;
-        box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
-    }
-
-    .meal-item__wrapper.active {
-        transform: scale(1.05);
-        box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
-        outline: solid 5px var(--color-primary);
-    }
 
     .meal-item__wrapper .meal-image-wrapper {
         position: relative;
@@ -72,10 +73,28 @@ defineProps({
 
     .meal-item__wrapper .meal-info-wrapper {
         padding: 1.5rem;
+        @media only screen and (max-width: 900px) {
+            padding: 1rem;
+        }
+
+        h2 {
+            margin-top: 0;
+            margin-bottom: 1rem;
+            @media only screen and (max-width: 900px) {
+                font-size: 1.1rem;
+            }
+        }
+
+        .short-description {
+            @media only screen and (max-width: 900px) {
+                font-size: 0.9rem;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;  
+                overflow: hidden;
+            }
+        }
     }
 
-    .meal-item__wrapper .meal-info-wrapper h2 {
-        margin-top: 0;
-        margin-bottom: 1rem;
-    }
+
 </style>

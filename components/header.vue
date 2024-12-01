@@ -1,7 +1,7 @@
 <template>
     <header class="page-row-wrapper">
         <div class="container">
-            <h1>Vegan maaltijden overzicht</h1>
+            <h1>Wat eten we?</h1>
         </div>
     </header>
 </template>
@@ -14,10 +14,21 @@
         margin-bottom: 5rem;
         color: var(--color-white);
         box-shadow: 0px 5px 13px rgba(68, 68, 68, 0.2705882353);
+
+        @media only screen and (max-width: 600px) {
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+            margin-bottom: 1rem;
+        }
+
         h1 {
             color: inherit;
             margin-bottom: 0;
+            @media only screen and (max-width: 600px) {
+                text-align: center;
+            }
         }
+
     }
 
 </style>

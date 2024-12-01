@@ -50,6 +50,13 @@ button {
   border-radius: 0.7rem;
   font-size: 1rem;
   transition: all ease-in-out 0.5s;
+  @media only screen and (max-width: 600px) {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-left: 0.8rem;
+    padding-right: 0.8rem;
+    font-size: 0.9rem;
+  }
 }
 button.primary {
   color: var(--color-white);

@@ -40,13 +40,21 @@
   <style scoped>
   .search-form-wrapper {
     margin-bottom: 2rem;
-    .search-form-wrapper input[type='text'] {
+    @media only screen and (max-width: 600px) {
+      margin-bottom: 1.5rem;
+    }
+    input[type='text'] {
       padding-left: 1rem;
       padding-right: 1rem;
       padding-top: 0.5rem;
       padding-bottom: 0.5rem;
       font-size: 1rem;
+      @media only screen and (max-width: 600px) {
+        width: 100%;
+      }
     }
   }
+
+  
   </style>
   
