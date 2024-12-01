@@ -1,4 +1,4 @@
-// Ensure this is inside your nuxt.config.js or relevant configuration
+// nuxt.config.js or related config file
 export default {
   generate: {
     routes: async () => {
@@ -9,8 +9,14 @@ export default {
         const filePath = path.resolve(__dirname, 'public/data/meals.json');
         const mealData = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
 
-        // Generate dynamic routes for each meal
-        const routes = mealData.map((item) => `/meal/${encodeURIComponent(item.name)}`);
+        // Log the meal data to verify its structure
+        console.log('Meal Data:', mealData);
+
+        // Generate dynamic routes for each meal, ensuring it's a valid string
+        const routes = mealData.map((item) => `/meal/${item.name}`); // Simplified, no encoding
+
+        // Log generated routes
+        console.log('Generated Routes:', routes);
 
         // Return the generated routes
         return routes;
@@ -20,4 +26,4 @@ export default {
       }
     }
   }
-};
+}
