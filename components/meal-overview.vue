@@ -49,12 +49,16 @@ watch(() => props.meals, (newMeals) => {
   <style scoped>
   .meals-container {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     grid-template-rows: 1fr;
     grid-column-gap: 3rem;
     grid-row-gap: 3rem;
     margin-bottom: 5rem;
 
+    @media only screen and (max-width: 1200px) {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    
     @media only screen and (max-width: 900px) {
       grid-template-columns: repeat(2, minmax(0, 1fr));
       grid-column-gap: 1.5rem;
