@@ -41,7 +41,7 @@ body {
   margin: 0;
   font-family: "Raleway", sans-serif;
   font-size: 1rem;
-  line-height: 1.3;
+  line-height: 1.5;
   background-color: #eaeaea;
 }
 
@@ -146,6 +146,9 @@ pre {
   @media only screen and (max-width: 1200px) {
     padding-left: 1rem;
     padding-right: 1rem;
+  }
+  &.main-content {
+    margin-bottom: 5rem;
   }
 }
 

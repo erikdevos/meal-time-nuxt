@@ -2,7 +2,7 @@
   <section class="page-row-wrapper main-content-section">
     <Header />
     
-    <div class="container">
+    <div class="container main-content">
       <NuxtPage />
     </div>
 
