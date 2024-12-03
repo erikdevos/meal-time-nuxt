@@ -34,7 +34,7 @@ const fetchMealDetail = async (mealName) => {
       return;
     }
 
-    const response = await fetch('https://jsonhost.com/json/0dcaa1a6c5578a40b36bb10ef412f19e')
+    const response = await fetch('https://erikdevos.github.io/meal-time-data/meals.json')
     const data = await response.json()
 
     console.log('Fetched data:', data) // Log the entire API response

@@ -23,7 +23,7 @@ const filteredMeals = ref([]); // Filtered meal data
 // Fetch meals data from external source
 const fetchMealsData = async () => {
   try {
-    const response = await fetch('https://jsonhost.com/json/5f19df4daab1bba7c467369dd44f8d8d');
+    const response = await fetch('https://erikdevos.github.io/meal-time-data/meals.json');
     const data = await response.json();
     meals.value = data || [];
     filteredMeals.value = [...meals.value]; // Start with all meals
