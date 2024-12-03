@@ -3,7 +3,7 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   debug: true,
   app: {
-    baseURL: '/',
+    baseURL: '',
     head: {
       meta: [
         { hid: 'robots', name: 'robots', content: 'noindex, nofollow' }
