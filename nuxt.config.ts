@@ -3,11 +3,15 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   debug: true,
   app: {
-    baseURL: process.env.BASE_URL || '', // Use environment variable or fallback to empty
+    // Use environment variable or fallback to empty
+    baseURL: process.env.BASE_URL || '', 
     head: {
       meta: [
+        // Set meta settings for app
         { hid: 'robots', name: 'robots', content: 'noindex, nofollow' }
-      ]
+      ],
+      // Page title
+      title: 'Wat eten we? - Meal Time', 
     }
   }
 });
