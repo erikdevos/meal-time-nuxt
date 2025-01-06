@@ -5,7 +5,7 @@ export default defineNuxtConfig({
   app: {
     baseURL: process.env.BASE_URL || '', // Correctly handle the base URL dynamically
     head: {
-      title: 'Meal Time',
+      title: 'Wat eten we? - Meal Time',
       meta: [
         {
           name: 'apple-mobile-web-app-capable',
@@ -20,7 +20,6 @@ export default defineNuxtConfig({
         { rel: 'icon', href: `${process.env.BASE_URL || ''}/favicon.svg` },
         { rel: "apple-touch-icon", type: "image/png", href: `${process.env.BASE_URL || ''}/favicon.svg` }
       ],
-      title: 'Wat eten we? - Meal Time'
     }
   },
   router: {
