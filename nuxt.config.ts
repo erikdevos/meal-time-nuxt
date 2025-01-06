@@ -10,6 +10,11 @@ export default defineNuxtConfig({
         // Set meta settings for app
         { hid: 'robots', name: 'robots', content: 'noindex, nofollow' }
       ],
+      link: [
+        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+        { rel: 'icon', type: 'image/png', sizes: '512x512', href: '/favicon.png' },
+        { rel: 'icon', href: '/favicon.svg' },
+      ],
       // Page title
       title: 'Wat eten we? - Meal Time', 
     }
