@@ -28,6 +28,9 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Set BASE_URL for GitHub Pages
+        run: echo "BASE_URL=/meal-time-nuxt/" >> $GITHUB_ENV
+
       - name: Build project
         run: npm run build
 
@@ -35,10 +38,10 @@ jobs:
         run: npm run generate
 
       - name: Disable Jekyll
-        run: touch dist/.nojekyll  # Or .output/public/.nojekyll if that's the publish_dir
+        run: touch .output/public/.nojekyll
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: dist  # Or .output/public if your build setup requires it
+          publish_dir: .output/public
