@@ -3,20 +3,22 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   debug: true,
   app: {
-    // Use environment variable or fallback to empty
-    baseURL: process.env.BASE_URL || '', 
+    baseURL: '', // Default to '' (empty) for local development
     head: {
       meta: [
-        // Set meta settings for app
         { hid: 'robots', name: 'robots', content: 'noindex, nofollow' }
       ],
       link: [
-        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-        { rel: 'icon', type: 'image/png', sizes: '512x512', href: '/favicon.png' },
-        { rel: 'icon', href: '/favicon.svg' },
+        { rel: 'icon', type: 'image/x-icon', href: `${process.env.BASE_URL || ''}/favicon.ico` },
+        { rel: 'icon', type: 'image/png', sizes: '512x512', href: `${process.env.BASE_URL || ''}/favicon.png` },
+        { rel: 'icon', href: `${process.env.BASE_URL || ''}/favicon.svg` }
       ],
-      // Page title
-      title: 'Wat eten we? - Meal Time', 
+      title: 'Wat eten we? - Meal Time'
+    }
+  },
+  runtimeConfig: {
+    public: {
+      baseURL: process.env.BASE_URL || '' // Use this in your components/templates
     }
   }
 });
