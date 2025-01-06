@@ -5,7 +5,12 @@ export default defineNuxtConfig({
   app: {
     baseURL: process.env.BASE_URL || '', // Correctly handle the base URL dynamically
     head: {
+      title: 'Meal Time',
       meta: [
+        {
+          name: 'apple-mobile-web-app-capable',
+          content: 'yes'
+        },
         { hid: 'robots', name: 'robots', content: 'noindex, nofollow' }
       ],
       link: [
