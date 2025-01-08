@@ -22,6 +22,11 @@ export default defineNuxtConfig({
       ],
     }
   },
+  nitro: {
+    routeRules: {
+      "/meal-images/medium/**": { headers: { 'cache-control': `public,max-age=86400,s-maxage=86400` } }
+    }
+  },
   router: {
     options: {
       strict: false // Set to `false` unless you want trailing slashes in your routes
