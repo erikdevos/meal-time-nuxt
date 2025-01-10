@@ -10,7 +10,7 @@
 
       <div class="meal-details-image">
         <img
-          :src="'/meal-images/medium/' + meal.name.replace(/\s+/g, '_').replace(/[^a-z0-9_]/gi, '').toLowerCase() + '.webp'"
+          :src="'../meal-images/medium/' + meal.name.replace(/\s+/g, '_').replace(/[^a-z0-9_]/gi, '').toLowerCase() + '.webp'"
           :alt="'Gerecht ' + meal.name"
           loading="lazy"
         />
