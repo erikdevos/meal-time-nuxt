@@ -45,8 +45,7 @@ watch(() => props.meals, (newMeals) => {
 });
 </script>
 
-  
-  <style scoped>
+<style scoped>
   .meals-container {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -74,8 +73,6 @@ watch(() => props.meals, (newMeals) => {
       grid-column-gap: 0;
       grid-row-gap: 3rem;
     }
-
   }
-
-  </style>
+</style>
   

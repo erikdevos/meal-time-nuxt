@@ -1,5 +1,5 @@
 <template>
-  <div class="button-bar">
+  <div class="filter-bar">
       <button 
           id="refreshButton" 
           class="primary overview-refresh-button" 
@@ -10,36 +10,7 @@
           </span>
       </button>
 
-      <div class="filter-toggles" style="display: none;">
-          <span class="label">Laat zien:</span>
-          <button 
-              class="secondary" 
-              :class="{'active': activeFilters.includes('betaalbaar')}"
-              @click="toggleFilter('betaalbaar')">
-              Betaalbaar
-          </button>
-
-          <button 
-              class="secondary" 
-              :class="{'active': activeFilters.includes('gezond')}"
-              @click="toggleFilter('gezond')">
-              Gezond
-          </button>
-
-          <button 
-              class="secondary" 
-              :class="{'active': activeFilters.includes('snel')}"
-              @click="toggleFilter('snel')">
-              Snel
-          </button>
-
-          <button 
-              class="secondary" 
-              :class="{'active': activeFilters.includes('verwennerij')}"
-              @click="toggleFilter('verwennerij')">
-              Verwennerij
-          </button>
-      </div>
+      <filter-items />
 
       <!-- Sort by new -->
       <button 
@@ -58,9 +29,10 @@
 
 <script setup>
 import { ref, watch } from 'vue';
+import filterItems from '~/components/filter-items.vue'
 
 const props = defineProps({
-meals: Array, // Meals data passed from the parent
+  meals: Array, // Meals data passed from the parent
 });
 
 const emit = defineEmits(['updateMeals']); // Define emit function for updating meals in the parent
@@ -105,15 +77,6 @@ const shuffledMeals = shuffleMeals([...props.meals]);
 emit('updateMeals', shuffledMeals);
 };
 
-const toggleFilter = (filter) => {
-if (activeFilters.value.includes(filter)) {
-  activeFilters.value = activeFilters.value.filter(f => f !== filter);
-} else {
-  activeFilters.value.push(filter);
-}
-updateTotalResults(); // Update the results count after filter change
-};
-
 const sortByNewest = () => {
 props.meals.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 updateTotalResults(); // Update the results count after sorting
@@ -121,7 +84,7 @@ updateTotalResults(); // Update the results count after sorting
 </script>
 
 <style scoped>
-.button-bar {
+.filter-bar {
   display: flex;
   align-items: center;
   margin-bottom: 3rem;
@@ -137,37 +100,6 @@ updateTotalResults(); // Update the results count after sorting
     @media only screen and (max-width: 600px) {
       margin-right: 0;
       margin-bottom: 1rem;
-    }
-  }
-
-  .filter-toggles {
-    display: flex;
-    align-items: center;
-    @media only screen and (max-width: 600px) {
-      flex-wrap: wrap;
-      row-gap: 0.5rem;
-      margin-bottom: 1rem;
-    }
-    .label {
-      margin-right: 1rem;
-      font-weight: bold;
-    }
-
-    button {
-      margin-right: 0.5rem;
-      background-color: gray;
-
-      &.active {
-        background-color: var(--color-primary-hover);
-      }
-
-      &:hover {
-        background-color: var(--color-primary);
-      }
-
-      &:last-of-type {
-        margin-right: 0;
-      }
     }
   }
 
