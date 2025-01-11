@@ -1,7 +1,7 @@
 <template>
     <footer class="page-row-wrapper">
         <div class="container">
-            Copyright 2024
+            Copyright 2025
         </div>
     </footer>
 </template>

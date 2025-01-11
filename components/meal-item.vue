@@ -69,7 +69,7 @@
 
     .meal-item__wrapper img {
         width: 100%;
-        aspect-ratio: 5/3;
+        aspect-ratio: 5/3.5;
         display: block;
         object-fit: cover;
         object-position: center center;
@@ -87,16 +87,18 @@
         h2 {
             margin-top: 0;
             margin-bottom: 0.5rem;
-            font-size: 1.3rem;
-            line-height: 1.3;
+            font-size: 1.2rem;
+            line-height: 1.2;
             @media only screen and (max-width: 900px) {
                 font-size: 1.1rem;
+                margin-bottom: 0.3rem;
             }
         }
 
         .short-description {
             @media only screen and (max-width: 900px) {
-                font-size: 0.9rem;
+                font-size: 0.8rem;
+                line-height: 1.4;
                 display: -webkit-box;
                 -webkit-line-clamp: 2;
                 -webkit-box-orient: vertical;  

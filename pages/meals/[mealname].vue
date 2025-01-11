@@ -102,7 +102,7 @@ onMounted(() => {
 .meal-details-wrapper {
   display: flex;
   gap: 2rem;
-  padding: 1.5rem;
+  padding: 2rem;
   margin-bottom: 3rem;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
   border-radius: 0.9rem;
@@ -110,19 +110,31 @@ onMounted(() => {
 
   @media only screen and (max-width: 900px) {
     flex-wrap: wrap;
+    padding: 1.2rem;
   }
   
 }
 
 h1 {
   font-size: 2rem;
+  word-break: break-word;
+  margin-bottom: 0.5rem;
+  @media only screen and (max-width: 900px) {
+    margin-bottom: 0;
+  }
 }
 
 h2 {
-  font-size: 1.5rem;
+  font-size: 1.3rem;
+  word-break: break-word;
+  @media only screen and (max-width: 900px) {
+    font-size: 1.1rem;
+  }
 }
 
 .meal-details-text {
+  max-width: 55ch;
+  word-break: break-word;
   p {
     &:last-of-type {
       margin-bottom: 0;
@@ -131,12 +143,13 @@ h2 {
 }
 
 .meal-details-image{
-  min-width: 20rem;
-  max-width: 25rem;
-  width: 100%;
+  max-width: 100%;
+  width: auto;
   height: auto;
+  margin-left: auto;
   @media only screen and (max-width: 900px) {
    max-width: none;
+   margin-left: initial;
   }
   img {
     width: 100%;
