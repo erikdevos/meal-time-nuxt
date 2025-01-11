@@ -14,9 +14,10 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import MealItem from '~/components/meal-item.vue';
 import Loader from '~/components/loader.vue'; // Adjust based on actual component location
+import { shuffleMeals } from '~/utils/randomize'; // Import the shuffleMeals utility
 
 const props = defineProps({
   meals: {
@@ -25,24 +26,24 @@ const props = defineProps({
   },
 });
 
-const meals = ref(props.meals);
-const loading = ref(false); // Start with the loader as false
+const meals = ref([]);
+const loading = ref(true); // Start with the loader as true
+let isFirstLoad = true; // Flag for the first load
 
-// Update meals and show the loader
-const updateMealsWithLoader = (filteredMeals) => {
-  loading.value = true; // Show loader
-  meals.value = []; // Clear current meals
-
-  setTimeout(() => {
-    meals.value = filteredMeals; // Update meals after delay
-    loading.value = false; // Hide loader
-  }, 200);
-};
-
-// Watch for changes in meals from search-bar and update meals with loader
+// Watch for changes in props.meals and reapply shuffling with loader
 watch(() => props.meals, (newMeals) => {
-  updateMealsWithLoader(newMeals);
-});
+  if (isFirstLoad) {
+    meals.value = shuffleMeals([...newMeals]); // Shuffle meals once on initial load
+    isFirstLoad = false; // Mark as not the first load
+    loading.value = false; // Hide the loader after the first load
+  } else {
+    loading.value = true; // Show loader for subsequent updates
+    setTimeout(() => {
+      meals.value = shuffleMeals([...newMeals]); // Shuffle meals
+      loading.value = false; // Hide loader
+    }, 150);
+  }
+}, { immediate: true }); // Handle the initial load
 </script>
 
 <style scoped>

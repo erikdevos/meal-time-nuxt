@@ -29,6 +29,7 @@
 
 <script setup>
 import { ref, watch } from 'vue';
+import { shuffleMeals } from '~/utils/randomize'
 import filterItems from '~/components/filter-items.vue'
 
 const props = defineProps({
@@ -42,30 +43,13 @@ const totalResults = ref(0);
 
 // Define the updateTotalResults function before calling it
 const updateTotalResults = () => {
-totalResults.value = props.meals.filter(meal =>
-  activeFilters.value.every(filter => meal.categoryLabels.includes(filter))
-).length;
+  totalResults.value = props.meals.filter(meal =>
+    activeFilters.value.every(filter => meal.categoryLabels.includes(filter))
+  ).length;
 };
 
 // Watch the meals data and update the total count after filters are applied
 watch(() => props.meals, updateTotalResults, { immediate: true });
-
-// Fisher-Yates shuffle algorithm to randomize the array
-const shuffleMeals = (array) => {
-let currentIndex = array.length, randomIndex, temporaryValue;
-
-// While there remain elements to shuffle...
-while (currentIndex !== 0) {
-  randomIndex = Math.floor(Math.random() * currentIndex);
-  currentIndex -= 1;
-
-  temporaryValue = array[currentIndex];
-  array[currentIndex] = array[randomIndex];
-  array[randomIndex] = temporaryValue;
-}
-
-return array;
-};
 
 // Refresh overview (reset filters and randomize meal order)
 const refreshOverview = () => {
@@ -74,12 +58,12 @@ updateTotalResults(); // Update the results count
 
 // Shuffle meals and emit the new order to the parent
 const shuffledMeals = shuffleMeals([...props.meals]);
-emit('updateMeals', shuffledMeals);
+  emit('updateMeals', shuffledMeals);
 };
 
 const sortByNewest = () => {
-props.meals.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-updateTotalResults(); // Update the results count after sorting
+  props.meals.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+  updateTotalResults(); // Update the results count after sorting
 };
 </script>
 
