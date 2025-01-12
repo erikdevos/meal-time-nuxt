@@ -55,17 +55,27 @@ const toggleFilter = (filter) => {
   @media only screen and (max-width: 600px) {
     flex-wrap: wrap;
     row-gap: 0.5rem;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
   }
   .label {
     margin-right: 1rem;
     font-weight: bold;
+    @media only screen and (max-width: 600px) {
+      display: none;
+    }
   }
 
   button {
     margin-right: 0.5rem;
     background-color: gray;
-
+    @media only screen and (max-width: 600px) {
+      margin-right: 0.3rem;
+      font-size: 0.9rem;
+      padding-top: 0.5rem;
+      padding-bottom: 0.5rem;
+      padding-left: 0.5rem;
+      padding-right: 0.5rem;
+    }
     &.active {
       background-color: var(--color-primary-hover);
     }
