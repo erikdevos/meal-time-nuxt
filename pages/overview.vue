@@ -2,7 +2,7 @@
   <div>
     <selected-meals />
     <search-bar :meals="meals" @updateMeals="handleUpdatedMeals" />
-    <filter-bar :meals="filteredMeals" @updateMeals="updateMeals" />
+    <filter-bar :meals="meals" @updateMeals="updateMeals" />
     <messages />
     <meal-overview :meals="filteredMeals" />
   </div>
@@ -16,7 +16,6 @@ import FilterBar from '~/components/filter-bar.vue';
 import Messages from '~/components/messages.vue';
 import MealOverview from '~/components/meal-overview.vue';
 
-// Reactive meal lists
 const meals = ref([]); // Original meal data
 const filteredMeals = ref([]); // Filtered meal data
 
@@ -38,14 +37,15 @@ const handleUpdatedMeals = (newMeals) => {
 };
 
 // Handle updates from the filter-bar
-const updateMeals = (newMeals) => {
-  filteredMeals.value = newMeals;
+const updateMeals = (filteredMealsArray) => {
+  meals.value = filteredMealsArray;
+  initializeMeals(filteredMealsArray);  // Update visible meals with the new data
 };
 
-// Log filtered meals for debugging
-watch(filteredMeals, (newMeals) => {
-  console.log('Filtered Meals:', newMeals);
-});
+// Initialize or update the filtered meals
+const initializeMeals = (mealsArray) => {
+  filteredMeals.value = mealsArray;  // Set filtered meals to new meal data
+};
 
 // Fetch meal data on component mount
 onMounted(() => {

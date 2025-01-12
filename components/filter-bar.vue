@@ -10,15 +10,7 @@
           </span>
       </button>
 
-      <filter-items />
-
-      <!-- Sort by new -->
-      <button 
-          id="sortByNew" 
-          style="display: none;" 
-          @click="sortByNewest">
-          Nieuwste
-      </button>
+      <filter-items @updateMeals="updateMeals" />
 
       <!-- Show totals -->
       <div class="overview-totals" id="overviewTotals">
@@ -38,34 +30,59 @@ const props = defineProps({
 
 const emit = defineEmits(['updateMeals']); // Define emit function for updating meals in the parent
 
-const activeFilters = ref([]);
-const totalResults = ref(0);
+const activeFilters = ref([]); // Store active filters
+const totalResults = ref(0); // Store the total count of filtered meals
 
-// Define the updateTotalResults function before calling it
+// Function to update the filtered results count based on active filters
 const updateTotalResults = () => {
   totalResults.value = props.meals.filter(meal =>
-    activeFilters.value.every(filter => meal.categoryLabels.includes(filter))
+    activeFilters.value.every(filter => {
+      return meal.categoryLabels && meal.categoryLabels.includes(filter); // Ensure categoryLabels exists
+    })
   ).length;
 };
 
 // Watch the meals data and update the total count after filters are applied
 watch(() => props.meals, updateTotalResults, { immediate: true });
 
+// Handle the filter updates from filter-items
+const updateMeals = (newActiveFilters) => {
+  activeFilters.value = newActiveFilters;
+
+  // Ensure filteredMeals is defined and calculated based on newActiveFilters
+  let filteredMeals = [...props.meals];
+
+  // Apply filters here (assuming you filter by category, for example)
+  filteredMeals = filteredMeals.filter((meal) => {
+    return newActiveFilters.every((filter) => meal[filter.key] === filter.value);
+  });
+
+  // Emit the filtered meals to the parent component
+  emit('updateMeals', filteredMeals);
+};
+
+// Function to filter meals based on active filters
+const filterMeals = (filters) => {
+  if (filters.length === 0) {
+    return props.meals; // If no filters are applied, return all meals
+  }
+
+  return props.meals.filter(meal =>
+    filters.every(filter => meal[filter] === '1') // Check if meal matches all active filters
+  );
+};
+
 // Refresh overview (reset filters and randomize meal order)
 const refreshOverview = () => {
-activeFilters.value = []; // Reset filters
-updateTotalResults(); // Update the results count
+  activeFilters.value = []; // Reset filters
+  updateTotalResults(); // Update the results count
 
-// Shuffle meals and emit the new order to the parent
-const shuffledMeals = shuffleMeals([...props.meals]);
+  // Shuffle meals and emit the new order to the parent
+  const shuffledMeals = shuffleMeals([...props.meals]);
   emit('updateMeals', shuffledMeals);
 };
-
-const sortByNewest = () => {
-  props.meals.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-  updateTotalResults(); // Update the results count after sorting
-};
 </script>
+
 
 <style scoped>
 .filter-bar {

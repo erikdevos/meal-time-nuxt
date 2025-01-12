@@ -5,19 +5,21 @@
     </div>
     <div v-else class="meals-container">
       <meal-item
-        v-for="meal in meals"
+        v-for="meal in visibleMeals"
         :key="meal.id"
         :meal="meal"
       />
     </div>
+
+    <!-- <div ref="loadMoreTrigger" class="load-more-trigger"></div> -->
   </div>
 </template>
 
 <script setup>
-import { ref, watch } from 'vue';
+import { ref, watch, onMounted, onBeforeUnmount } from 'vue';
+import { shuffleMeals } from '~/utils/randomize';
 import MealItem from '~/components/meal-item.vue';
-import Loader from '~/components/loader.vue'; // Adjust based on actual component location
-import { shuffleMeals } from '~/utils/randomize'; // Import the shuffleMeals utility
+import Loader from '~/components/loader.vue';
 
 const props = defineProps({
   meals: {
@@ -26,24 +28,28 @@ const props = defineProps({
   },
 });
 
-const meals = ref([]);
-const loading = ref(true); // Start with the loader as true
-let isFirstLoad = true; // Flag for the first load
+const meals = ref([]); // All meals shuffled
+const visibleMeals = ref([]); // Meals visible on the screen
+const loading = ref(true);
 
-// Watch for changes in props.meals and reapply shuffling with loader
+// Initialize meals and state
+const initializeMeals = () => {
+  meals.value = shuffleMeals([...props.meals]);
+  visibleMeals.value = meals.value.slice(0, 99); // Show first 16 meals initially
+  loading.value = false;
+};
+
+// Watch for changes in the meals prop (which may come from filters or search bar)
 watch(() => props.meals, (newMeals) => {
-  if (isFirstLoad) {
-    meals.value = shuffleMeals([...newMeals]); // Shuffle meals once on initial load
-    isFirstLoad = false; // Mark as not the first load
-    loading.value = false; // Hide the loader after the first load
-  } else {
-    loading.value = true; // Show loader for subsequent updates
-    setTimeout(() => {
-      meals.value = shuffleMeals([...newMeals]); // Shuffle meals
-      loading.value = false; // Hide loader
-    }, 150);
-  }
-}, { immediate: true }); // Handle the initial load
+  meals.value = shuffleMeals([...newMeals]);
+  initializeMeals();
+}, { immediate: true });
+
+// Handle updates from the filter bar
+const updateMeals = (newMeals) => {
+  meals.value = newMeals;
+  initializeMeals();
+};
 </script>
 
 <style scoped>
@@ -75,5 +81,9 @@ watch(() => props.meals, (newMeals) => {
       grid-row-gap: 3rem;
     }
   }
+
+  .load-more-trigger {
+    height: 50px;
+    background: red; /* Debugging color */
+  }
 </style>
-  
