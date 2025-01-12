@@ -27,15 +27,17 @@
       class="secondary" 
       :class="{'active': activeFilters.includes('treat')}"
       @click="toggleFilter('treat')">
-      Verwennerij
+      Speciaal
     </button>
 
   </div>
 </template>
 
 <script setup>
+import { ref } from 'vue';
+
 const emit = defineEmits(['updateMeals']);
-const activeFilters = ref([]);
+const activeFilters = ref([]); // Ensure the filters are initialized
 
 // Toggle the filter active state
 const toggleFilter = (filter) => {
@@ -44,7 +46,11 @@ const toggleFilter = (filter) => {
   } else {
     activeFilters.value.push(filter);
   }
-  emit('updateMeals', activeFilters.value); // Pass the active filters to the parent
+  
+  // Only emit the updated meals if no shuffle is explicitly needed
+  if (filter !== 'shuffle') {
+    emit('updateMeals', activeFilters.value); // Pass the active filters to the parent
+  }
 };
 </script>
 
