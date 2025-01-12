@@ -41,9 +41,9 @@ const initializeMeals = () => {
 
 // Watch for changes in the meals prop (which may come from filters or search bar)
 watch(() => props.meals, (newMeals) => {
-  meals.value = shuffleMeals([...newMeals]);
-  initializeMeals();
-}, { immediate: true });
+  meals.value = newMeals;  // Directly assign new meals from the parent
+  initializeMeals();  // Initialize visible meals without shuffling
+});
 
 // Handle updates from the filter bar
 const updateMeals = (newMeals) => {

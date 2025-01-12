@@ -74,12 +74,14 @@ const filterMeals = (filters) => {
 
 // Refresh overview (reset filters and randomize meal order)
 const refreshOverview = () => {
-  activeFilters.value = []; // Reset filters
-  updateTotalResults(); // Update the results count
+  if (activeFilters.value.length === 0) {  // Only shuffle when there are no active filters
+    activeFilters.value = []; // Clear filters
+    totalResults.value = props.meals.length; // Reset total count
 
-  // Shuffle meals and emit the new order to the parent
-  const shuffledMeals = shuffleMeals([...props.meals]);
-  emit('updateMeals', shuffledMeals);
+    // Shuffle the meals and emit them to the parent component
+    const shuffledMeals = shuffleMeals([...props.meals]);
+    emit('updateMeals', shuffledMeals);
+  }
 };
 </script>
 
