@@ -9,10 +9,10 @@
         />
         <ul class="category-labels">
           <!-- Display labels based on meal properties -->
-          <li v-if="meal.healthy === '1'" class="category-label">Healthy</li>
-          <li v-if="meal.cheap === '1'" class="category-label">Cheap</li>
-          <li v-if="meal.fast === '1'" class="category-label">Fast</li>
-          <li v-if="meal.treat === '1'" class="category-label">Treat</li>
+          <li v-if="meal.healthy === '1'" class="category-label">Gezond</li>
+          <li v-if="meal.cheap === '1'" class="category-label">Goedkoop</li>
+          <li v-if="meal.fast === '1'" class="category-label">Snel</li>
+          <li v-if="meal.treat === '1'" class="category-label">Speciaal</li>
         </ul>
       </div>
       <div class="meal-info-wrapper">
