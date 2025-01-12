@@ -5,7 +5,6 @@
 <script setup>
   definePageMeta({
     redirect: '/overview', // Redirect to the /overview route
-    title: 'Meal Time'
   });
 </script>
 
