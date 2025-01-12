@@ -21,8 +21,8 @@
 
 <script setup>
 import { ref, watch } from 'vue';
-import { shuffleMeals } from '~/utils/randomize'
-import filterItems from '~/components/filter-items.vue'
+import { shuffleMeals } from '~/utils/randomize';
+import filterItems from '~/components/filter-items.vue';
 
 const props = defineProps({
   meals: Array, // Meals data passed from the parent
@@ -47,22 +47,25 @@ watch(() => props.meals, updateTotalResults, { immediate: true });
 
 // Handle the filter updates from filter-items
 const updateMeals = (newActiveFilters) => {
+  console.log('Active Filters Changed:', newActiveFilters); // Log active filters
+
   activeFilters.value = newActiveFilters;
+  let filteredMeals = [...props.meals]; // Make a shallow copy of meals
 
-  // Ensure filteredMeals is defined and calculated based on newActiveFilters
-  let filteredMeals = [...props.meals];
-
-  // Apply filters here (assuming you filter by category, for example)
+  // Apply filters (check for '1' value for filters)
   filteredMeals = filteredMeals.filter((meal) => {
-    return newActiveFilters.every((filter) => meal[filter.key] === filter.value);
+    return newActiveFilters.every((filter) => meal[filter] === '1');
   });
 
+  console.log('Filtered Meals:', filteredMeals); // Log filtered meals
+  
   // Emit the filtered meals to the parent component
-  emit('updateMeals', filteredMeals);
+  emit('updateMeals', filteredMeals); 
 };
 
 // Function to filter meals based on active filters
 const filterMeals = (filters) => {
+  console.log('Filtering with Filters:', filters); // Log filters applied to meals
   if (filters.length === 0) {
     return props.meals; // If no filters are applied, return all meals
   }

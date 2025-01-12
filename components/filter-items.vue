@@ -46,11 +46,9 @@ const toggleFilter = (filter) => {
   } else {
     activeFilters.value.push(filter);
   }
-  
-  // Only emit the updated meals if no shuffle is explicitly needed
-  if (filter !== 'shuffle') {
-    emit('updateMeals', activeFilters.value); // Pass the active filters to the parent
-  }
+
+  // Emit only the filters that are selected (no shuffle here)
+  emit('updateMeals', activeFilters.value); // Pass the active filters to the parent
 };
 </script>
 

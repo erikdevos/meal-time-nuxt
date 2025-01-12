@@ -28,29 +28,33 @@ const props = defineProps({
   },
 });
 
-const meals = ref([]); // All meals shuffled
+const meals = ref([]); // All meals (no shuffle)
 const visibleMeals = ref([]); // Meals visible on the screen
 const loading = ref(true);
 
 // Initialize meals and state
-const initializeMeals = () => {
-  meals.value = shuffleMeals([...props.meals]);
+const initializeMeals = (shuffled = false) => {
+  console.log('Initializing meals, shuffled:', shuffled); // Log whether meals are shuffled or not
+  meals.value = shuffled ? shuffleMeals([...props.meals]) : [...props.meals];
   visibleMeals.value = meals.value.slice(0, 99); // Show first 16 meals initially
   loading.value = false;
 };
 
 // Watch for changes in the meals prop (which may come from filters or search bar)
 watch(() => props.meals, (newMeals) => {
+  console.log('Meals updated in meal-overview:', newMeals); // Log the new meals being passed
   meals.value = newMeals;  // Directly assign new meals from the parent
-  initializeMeals();  // Initialize visible meals without shuffling
+  initializeMeals(false);  // Initialize meals without shuffling
 });
 
 // Handle updates from the filter bar
 const updateMeals = (newMeals) => {
+  console.log('Updating meals in meal-overview:', newMeals); // Log meals being passed for updates
   meals.value = newMeals;
-  initializeMeals();
+  initializeMeals(false); // Don't shuffle when filters are applied
 };
 </script>
+
 
 <style scoped>
   .meals-container {
