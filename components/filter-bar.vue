@@ -54,6 +54,7 @@ const updateMeals = (newActiveFilters) => {
 
   // Apply filters (check for '1' value for filters)
   filteredMeals = filteredMeals.filter((meal) => {
+    // Check if the meal satisfies all active filters (AND logic)
     return newActiveFilters.every((filter) => meal[filter] === '1');
   });
 
