@@ -27,7 +27,7 @@
 
       <div class="meal-details-image">
         <img
-          :src="'../meal-images/medium/' + meal.name.replace(/\s+/g, '_').replace(/[^a-z0-9_]/gi, '').toLowerCase() + '.webp'"
+          :src="mealImageUrl(meal.name, baseURL)"
           :alt="'Gerecht ' + meal.name"
           loading="lazy"
         />
@@ -54,9 +54,11 @@ import { ref, computed, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { fetchMeals } from '~/utils/meals'
 import { parseRecipe } from '~/utils/formatRecipe'
+import { mealImageUrl } from '~/utils/mealImage'
 import Loader from '~/components/loader.vue'
 
 const route = useRoute()
+const baseURL = useRuntimeConfig().app.baseURL
 
 const meal = ref(null)
 const status = ref('loading') // 'loading' | 'ready' | 'error'
