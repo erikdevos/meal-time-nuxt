@@ -1,11 +1,28 @@
 <template>
-  <div v-if="meal">
+  <div v-if="status === 'loading'">
+    <loader />
+  </div>
+
+  <div v-else-if="status === 'error'" class="meal-message" role="alert">
+    <p>Het gerecht kon niet worden geladen. Probeer het later opnieuw.</p>
+  </div>
+
+  <div v-else-if="meal">
     <div class="meal-details-wrapper">
 
       <div class="meal-details-text">
         <h1>{{ meal.name }}</h1>
         <h2>{{ meal.description }}</h2>
-        <p>{{ meal.recipe }}</p>
+
+        <div class="meal-recipe">
+          <template v-for="(block, index) in recipe" :key="index">
+            <h3 v-if="block.type === 'heading'">{{ block.text }}</h3>
+            <ul v-else-if="block.type === 'list'">
+              <li v-for="(item, itemIndex) in block.items" :key="itemIndex">{{ item }}</li>
+            </ul>
+            <p v-else>{{ block.text }}</p>
+          </template>
+        </div>
       </div>
 
       <div class="meal-details-image">
@@ -18,10 +35,10 @@
 
     <!-- More meal details here -->
   </div>
-  
+
   </div>
-  <div v-else>
-    <p>Meal not found</p>
+  <div v-else class="meal-message">
+    <p>Dit gerecht bestaat niet (meer).</p>
   </div>
 
   <NuxtLink :to="'/overview'">
@@ -33,67 +50,34 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
-import { useState } from '#app' // Import useState from Nuxt 3
+import { fetchMeals } from '~/utils/meals'
+import { parseRecipe } from '~/utils/formatRecipe'
+import Loader from '~/components/loader.vue'
 
-// Define the reactive meal object
-const meal = ref(null)
 const route = useRoute()
 
-// Use Nuxt's useState to cache the meal data for each individual meal
-const cachedMeal = useState(() => ({})) // Cache meal data
+const meal = ref(null)
+const status = ref('loading') // 'loading' | 'ready' | 'error'
+const recipe = computed(() => parseRecipe(meal.value?.recipe))
 
 // Normalize the meal name (convert to lowercase, replace spaces and hyphens with underscores, remove non-alphanumeric characters)
 const normalizeMealName = (name) => {
-  return name.toLowerCase().replace(/[\s\-]+/g, '_').replace(/[^a-z0-9_]/gi, '');
+  return String(name ?? '').toLowerCase().replace(/[\s\-]+/g, '_').replace(/[^a-z0-9_]/gi, '');
 }
 
-// Fetch the meal data based on the meal name in the URL
-const fetchMealDetail = async (mealName) => {
+// Look up the meal from the shared meals list when the component is mounted
+onMounted(async () => {
   try {
-    if (cachedMeal.value[mealName]) {
-      meal.value = cachedMeal.value[mealName]; // Use cached meal if available
-      return;
-    }
+    const meals = await fetchMeals()
+    const wanted = normalizeMealName(route.params['mealname'])
 
-    const response = await fetch('https://erikdevos.github.io/meal-time-data/meals.json')
-    const data = await response.json()
-
-    console.log('Fetched data:', data) // Log the entire API response
-    console.log('Meal name to search for:', mealName) // Log the meal name parameter
-
-    // Normalize both the meal name from URL and the name in the JSON data
-    const normalizedMealName = normalizeMealName(mealName);
-
-    // Find the meal by its normalized name and cache it
-    const foundMeal = data.find(item => {
-      const normalizedItemName = normalizeMealName(item.name); // Normalize the name in JSON data
-      console.log(`Comparing normalized names: ${normalizedItemName} === ${normalizedMealName}`);
-      return normalizedItemName === normalizedMealName;
-    }) || null;
-
-    meal.value = foundMeal;
-
-    if (foundMeal) {
-      cachedMeal.value[mealName] = foundMeal; // Cache the meal data
-    } else {
-      console.warn(`No meal found with name: ${mealName}`)
-    }
-
+    meal.value = meals.find((item) => normalizeMealName(item.name) === wanted) || null
+    status.value = 'ready'
   } catch (err) {
     console.error('Error fetching meal detail:', err)
-  }
-}
-
-// Fetch the meal data when the component is mounted or the route changes
-onMounted(() => {
-  const mealNameFromUrl = route.params['mealname']
-  console.log('Route param mealname:', mealNameFromUrl) // Log the meal name from the URL
-  if (mealNameFromUrl) {
-    fetchMealDetail(mealNameFromUrl)
-  } else {
-    console.warn('No meal name in URL')
+    status.value = 'error'
   }
 })
 </script>
@@ -112,7 +96,11 @@ onMounted(() => {
     flex-wrap: wrap;
     padding: 1.2rem;
   }
-  
+
+}
+
+.meal-message {
+  margin-bottom: 2rem;
 }
 
 h1 {
@@ -139,6 +127,24 @@ h2 {
     &:last-of-type {
       margin-bottom: 0;
     }
+  }
+}
+
+.meal-recipe {
+  h3 {
+    font-size: 1.05rem;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+
+  ul {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    padding-left: 1.2rem;
   }
 }
 

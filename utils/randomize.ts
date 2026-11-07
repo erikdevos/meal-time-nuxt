@@ -9,6 +9,5 @@ export function shuffleMeals(array) {
     array[currentIndex] = array[randomIndex];
     array[randomIndex] = temporaryValue;
   }
-  console.log("Shuffle meals");
   return array;
 }

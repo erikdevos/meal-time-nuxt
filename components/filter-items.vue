@@ -36,7 +36,7 @@
 <script setup>
 import { ref } from 'vue';
 
-const emit = defineEmits(['updateMeals']);
+const emit = defineEmits(['updateFilters']);
 const activeFilters = ref([]); // Ensure the filters are initialized
 
 // Toggle the filter active state
@@ -44,11 +44,11 @@ const toggleFilter = (filter) => {
   if (activeFilters.value.includes(filter)) {
     activeFilters.value = activeFilters.value.filter(f => f !== filter);
   } else {
-    activeFilters.value.push(filter);
+    activeFilters.value = [...activeFilters.value, filter];
   }
 
-  // Emit only the filters that are selected (no shuffle here)
-  emit('updateMeals', activeFilters.value); // Pass the active filters to the parent
+  // Emit a copy of the selected filters; the parent does the actual filtering
+  emit('updateFilters', [...activeFilters.value]);
 };
 </script>
 

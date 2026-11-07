@@ -27,41 +27,27 @@
 </template>
 
 <script setup>
-import { ref, defineProps, defineEmits } from 'vue';
-
-const props = defineProps({
-  meals: {
-    type: Array,
-    required: true
-  }
-});
+import { ref } from 'vue';
 
 const searchQuery = ref('');
-const emit = defineEmits(['updateMeals']);
+const emit = defineEmits(['search']);
 
 let timeoutId = null; // To store the timeout ID
 
-// Handle search with a slight delay
+// Emit the search term after a slight delay; the parent does the actual filtering
 const handleSearch = () => {
   clearTimeout(timeoutId);
 
   timeoutId = setTimeout(() => {
-    const filteredMeals = props.meals.filter(meal => {
-      const searchText = searchQuery.value.toLowerCase();
-      return (
-        meal?.name?.toLowerCase().includes(searchText) || 
-        meal?.description?.toLowerCase().includes(searchText)
-      );
-    });
-
-    emit('updateMeals', [...filteredMeals]);
+    emit('search', searchQuery.value);
   }, 300); // 300ms delay
 };
 
-// Clear the search input
+// Clear the search input and reset immediately
 const clearSearch = () => {
+  clearTimeout(timeoutId);
   searchQuery.value = '';
-  emit('updateMeals', props.meals); // Reset to the full list of meals when cleared
+  emit('search', '');
 };
 </script>
   
