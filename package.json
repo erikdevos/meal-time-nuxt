@@ -11,9 +11,9 @@
     "deploy": "nuxt generate && gh-pages -d dist"
   },
   "dependencies": {
-    "nuxt": "^3.14.1592",
-    "vue": "latest",
-    "vue-router": "latest"
+    "nuxt": "^3.21.11",
+    "vue": "^3.5.45",
+    "vue-router": "^4.6.4"
   },
   "packageManager": "pnpm@9.14.2+sha1.5202b50ab92394b3c922d2e293f196e2df6d441b"
 }
