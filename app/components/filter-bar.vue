@@ -6,7 +6,7 @@
           @click="emit('shuffle')">
           Shuffle
           <span class="icon">
-            <img src="/public/resources/icon_shuffle.svg" alt="">
+            <img src="/resources/icon_shuffle.svg" alt="">
           </span>
       </button>
 
