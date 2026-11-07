@@ -1,0 +1,1 @@
+import{K as e,S as t,U as n}from"./C0qLWWqo.js";var r={__name:`index`,setup(r){return(r,i)=>{let a=e(`Overview`);return n(),t(a)}}};export{r as default};
