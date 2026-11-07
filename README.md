@@ -1,75 +1,44 @@
-# Nuxt Minimal Starter
+# Meal Time
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+Overzicht van gerechten ("Wat eten we?") met zoeken, filters (Gezond, Betaalbaar, Snel, Speciaal), shuffle en een detailpagina per gerecht. Gebouwd met [Nuxt 4](https://nuxt.com) en Vue 3, als statische site gepubliceerd op GitHub Pages.
 
-## Setup
+De gerechten worden bij het laden opgehaald uit een externe JSON:
+`https://erikdevos.github.io/meal-time-data/meals.json` (repository `meal-time-data`).
 
-Make sure to install dependencies:
+## Vereisten
+
+- Node.js `^22.22.3` of nieuwer (zie `engines` van Nuxt)
+- pnpm 12, de versie staat in het veld `packageManager` van `package.json`. Oudere pnpm-versies kunnen de lockfile niet lezen; werk bij met `pnpm self-update`.
+
+## Ontwikkelen
 
 ```bash
-# npm
-npm install
-
-# pnpm
 pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
-```
-
-## Development Server
-
-Start the development server on `http://localhost:3000`:
-
-```bash
-# npm
-npm run dev
-
-# pnpm
 pnpm dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
 ```
 
-## Production
+De dev-server draait op `http://localhost:3000` (of de eerstvolgende vrije poort).
 
-Build the application for production:
+## Structuur
+
+- `app/` — de applicatie: `pages/`, `components/` en `utils/`
+  - `utils/meals.ts` haalt de gerechten op (eenmalig, gedeeld tussen pagina's)
+  - `utils/formatRecipe.ts` zet de receptteksten om naar kopjes en lijsten
+- `public/` — statische bestanden en gerechtafbeeldingen (`meal-images/medium/<naam>.webp`)
+- `nuxt.config.ts` — configuratie, inclusief de `BASE_URL` voor GitHub Pages
+
+## Statische site genereren
 
 ```bash
-# npm
-npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
+BASE_URL=/meal-time-nuxt/ pnpm generate
 ```
 
-Locally preview production build:
+De uitvoer staat daarna in `.output/public`. Een lokale preview kan met `pnpm preview`.
 
-```bash
-# npm
-npm run preview
+## Deploy
 
-# pnpm
-pnpm preview
+Een push naar `main` start de workflow `.github/workflows/gh-pages.yml`. Die installeert de dependencies met de lockfile, genereert de site met `BASE_URL=/meal-time-nuxt/` en publiceert `.output/public` naar de branch `gh-pages`.
 
-# yarn
-yarn preview
+## Bekende beperking
 
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+In de bron-JSON zijn bij sommige recepten de regeleinden vervangen door een letterlijke "n". `formatRecipe.ts` herstelt alleen wat eenduidig is (lijstregels en kopjes). Volledig herstel vraagt een nieuwe export van de data.
