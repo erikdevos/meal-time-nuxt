@@ -1,12 +1,21 @@
 <template>
   <div>
     <selected-meals />
-    <search-bar @search="searchQuery = $event" />
-    <filter-bar
-      :total="filteredMeals.length"
-      @updateFilters="activeFilters = $event"
-      @shuffle="shuffle"
-    />
+
+    <section class="intro">
+      <h1>Wat eten we vandaag?</h1>
+      <p>Zoek een gerecht, filter op wat jij nodig hebt of laat de shuffle beslissen.</p>
+    </section>
+
+    <div class="toolbar">
+      <search-bar @search="searchQuery = $event" />
+      <filter-bar
+        :total="filteredMeals.length"
+        @updateFilters="activeFilters = $event"
+        @shuffle="shuffle"
+      />
+    </div>
+
     <messages :error="errorMessage" />
     <meal-overview :meals="filteredMeals" :loading="loading" />
   </div>
@@ -66,3 +75,46 @@ onMounted(() => {
   fetchMealsData();
 });
 </script>
+
+<style scoped>
+.intro {
+  margin-bottom: 1.75rem;
+}
+
+.intro h1 {
+  margin-bottom: 0.4rem;
+  font-size: clamp(1.8rem, 1.2rem + 2.4vw, 2.6rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+.intro p {
+  margin: 0;
+  max-width: 52ch;
+  text-wrap: balance;
+  font-size: 1.1rem;
+  color: var(--color-muted);
+}
+
+.toolbar {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  margin-bottom: 2rem;
+}
+
+@media only screen and (max-width: 600px) {
+  .intro {
+    margin-bottom: 1.25rem;
+  }
+
+  .intro p {
+    font-size: 1rem;
+  }
+
+  .toolbar {
+    gap: 0.9rem;
+    margin-bottom: 1.5rem;
+  }
+}
+</style>

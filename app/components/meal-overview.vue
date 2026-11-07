@@ -3,7 +3,9 @@
     <div v-if="loading">
       <loader />
     </div>
-    <p v-else-if="!meals.length" class="no-results">Geen gerechten gevonden.</p>
+    <p v-else-if="!meals.length" class="no-results">
+      Geen gerechten gevonden. Probeer een andere zoekterm of haal een filter weg.
+    </p>
     <div v-else class="meals-container">
       <meal-item
         v-for="meal in meals"
@@ -32,36 +34,34 @@ defineProps({
 
 
 <style scoped>
-  .no-results {
-    margin-bottom: 5rem;
-  }
+.no-results {
+  margin: 1rem 0 3rem;
+  padding: 2.5rem 1.5rem;
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-lg);
+  color: var(--color-muted);
+  text-align: center;
+  background-color: var(--color-surface);
+}
 
+.meals-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(15.5rem, 1fr));
+  gap: 1.75rem;
+  margin-bottom: 3rem;
+}
+
+@media only screen and (max-width: 600px) {
   .meals-container {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    grid-template-rows: 1fr;
-    grid-column-gap: 3rem;
-    grid-row-gap: 3rem;
-    margin-bottom: 5rem;
-
-    @media only screen and (max-width: 1200px) {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-
-    @media only screen and (max-width: 900px) {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      grid-column-gap: 1.5rem;
-      grid-row-gap: 1.5rem;
-    }
-
-    @media only screen and (max-width: 600px) {
-      gap: 1rem;
-    }
-
-    @media only screen and (max-width: 300px) {
-      grid-template-columns: repeat(1, minmax(0, 1fr));
-      grid-column-gap: 0;
-      grid-row-gap: 3rem;
-    }
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.9rem;
+    margin-bottom: 2rem;
   }
+}
+
+@media only screen and (max-width: 300px) {
+  .meals-container {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
 </style>

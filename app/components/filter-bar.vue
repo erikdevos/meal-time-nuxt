@@ -1,20 +1,22 @@
 <template>
   <div class="filter-bar">
-      <button 
-          id="refreshButton" 
-          class="primary overview-refresh-button" 
-          @click="emit('shuffle')">
-          Shuffle
-          <span class="icon">
-            <img src="/resources/icon_shuffle.svg" alt="">
-          </span>
-      </button>
-
       <filter-items @updateFilters="emit('updateFilters', $event)" />
 
-      <!-- Show totals -->
-      <div class="overview-totals" id="overviewTotals">
-          <span id="totalResults">{{ total }} gerechten</span>
+      <div class="filter-actions">
+          <!-- Show totals -->
+          <div class="overview-totals" id="overviewTotals" aria-live="polite">
+              <span id="totalResults">{{ total }} {{ total === 1 ? 'gerecht' : 'gerechten' }}</span>
+          </div>
+
+          <button
+              id="refreshButton"
+              class="primary overview-refresh-button"
+              @click="emit('shuffle')">
+              Shuffle
+              <span class="icon">
+                <img src="/resources/icon_shuffle.svg" alt="">
+              </span>
+          </button>
       </div>
   </div>
 </template>
@@ -37,29 +39,33 @@ const emit = defineEmits(['updateFilters', 'shuffle']);
 .filter-bar {
   display: flex;
   align-items: center;
-  margin-bottom: 3rem;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
 
-  @media only screen and (max-width: 600px) {
+.filter-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.overview-totals {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-muted);
+  white-space: nowrap;
+}
+
+@media only screen and (max-width: 600px) {
+  .filter-bar {
     flex-direction: column;
-    margin-bottom: 1.5rem;
+    align-items: stretch;
+    gap: 0.9rem;
   }
 
-  .overview-refresh-button {
-    margin-right: 1rem;
-
-    @media only screen and (max-width: 600px) {
-      margin-right: 0;
-      margin-bottom: 1rem;
-    }
-  }
-
-  .overview-totals {
-    margin-left: auto;
-    color: var(--color-mid-gray);
-    @media only screen and (max-width: 600px) {
-      margin-left: initial;
-      text-align: center;
-    }
+  .filter-actions {
+    justify-content: space-between;
   }
 }
 </style>
