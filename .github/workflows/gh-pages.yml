@@ -4,44 +4,48 @@ on:
   push:
     branches:
       - main  # Ensure this is the correct default branch
+  workflow_dispatch:
+
+# Needed to push to the gh-pages branch with the default GITHUB_TOKEN
+permissions:
+  contents: write
+
+# Don't run two deploys at the same time
+concurrency:
+  group: gh-pages-deploy
+  cancel-in-progress: true
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
+
+      # pnpm version is read from the "packageManager" field in package.json
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
 
       - name: Set up Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4
         with:
-          node-version: '18'
-
-      - name: Cache node_modules
-        uses: actions/cache@v2
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
+          node-version: '22'
+          cache: pnpm
 
       - name: Install dependencies
-        run: npm install
+        run: pnpm install --frozen-lockfile
 
-      - name: Set BASE_URL for GitHub Pages
-        run: echo "BASE_URL=/meal-time-nuxt/" >> $GITHUB_ENV
-
-      - name: Build project
-        run: npm run build
-
+      # "nuxt generate" already builds the project, so a separate build step is not needed
       - name: Generate static files
-        run: npm run generate
+        run: pnpm generate
+        env:
+          BASE_URL: /meal-time-nuxt/
 
       - name: Disable Jekyll
         run: touch .output/public/.nojekyll
 
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+        uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: .output/public
